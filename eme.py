@@ -34,20 +34,19 @@ def DET(mMax,nMax,eta):
 def EME(mMax,nMax,eta,det,l,c):
 	iterations = 10**10
 	epsilon = 10**(-12)
-	for j in range(0,len(c)):
-		pn=np.array([1./(nMax+1)]*(nMax+1))
-		iteration=0
-		while (iteration<iterations):
-			EM=np.dot(c/np.dot(det,pn),det)*pn
-			E=l*(np.log(pn)-np.sum(pn*np.log(pn)))*pn
-			E[np.isnan(E)]=0.0
-			EME=EM-E
-			dist = np.sqrt(np.sum((EME-pn)**2))
-			if dist<=epsilon:
-				break
-			else:
-				pn=EME
-				iteration+=1
+	pn=np.array([1./(nMax+1)]*(nMax+1))
+	iteration=0
+	while (iteration<iterations):
+		EM=np.dot(c/np.dot(det,pn),det)*pn
+		E=l*(np.log(pn)-np.sum(pn*np.log(pn)))*pn
+		E[np.isnan(E)]=0.0
+		EME=EM-E
+		dist = np.sqrt(np.sum((EME-pn)**2))
+		if dist<=epsilon:
+			break
+		else:
+			pn=EME
+			iteration+=1
 	return EME
 
 # numerical values
